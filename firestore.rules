@@ -1,0 +1,81 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    
+    function isAdmin() {
+      return isSignedIn() && 
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+    
+    // Basic read access for authenticated users
+    match /{document=**} {
+      allow read: if isSignedIn();
+    }
+    
+    // Messages collection
+    match /messages/{messageId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn() && 
+        request.resource.data.uid == request.auth.uid;
+      allow delete: if isAdmin();
+    }
+    
+    // Posts & announcements
+    match /posts/{postId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn();
+      allow delete: if isSignedIn() && (
+        request.auth.uid == resource.data.createdBy || isAdmin()
+      );
+    }
+    
+    // Polls
+    match /polls/{pollId} {
+      allow read: if isSignedIn();
+      allow create: if isAdmin();
+      
+      match /votes/{userId} {
+        allow read: if isSignedIn();
+        allow write: if isSignedIn() && userId == request.auth.uid;
+      }
+    }
+    
+    // Leader polls
+    match /leader_polls/{pollId} {
+      allow read: if isSignedIn();
+      allow create: if isAdmin();
+      
+      match /votes/{userId} {
+        allow read: if isSignedIn();
+        allow write: if isSignedIn() && userId == request.auth.uid;
+      }
+    }
+    
+    // Video calls
+    match /video-calls/{roomId} {
+      allow read, create: if isSignedIn();
+      allow delete: if isSignedIn() && 
+        (request.auth.uid == resource.data.createdBy || isAdmin());
+      
+      match /participants/{userId} {
+        allow read, write: if isSignedIn();
+      }
+    }
+    
+    // Admin codes
+    match /admin-codes/{codeId} {
+      allow read: if isAdmin();
+      allow delete: if isAdmin();
+    }
+    
+    // Admins
+    match /admins/{userId} {
+      allow read: if isSignedIn();
+      allow write: if false; // Only through admin code redemption
+    }
+  }
+}

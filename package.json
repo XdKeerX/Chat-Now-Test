@@ -1,0 +1,33 @@
+{
+  "name": "firebase-chat-polls",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite --host",
+    "dev:https": "vite --host --https",
+    "build": "vite build",
+    "preview": "vite preview",
+    "generate-certs": "generate-certs.bat"
+  },
+  "dependencies": {
+    "chart.js": "^4.4.0",
+    "firebase": "^9.23.0",
+    "firebase-admin": "^13.5.0",
+    "firebase-functions": "^6.4.0",
+    "react": "^18.2.0",
+    "react-chartjs-2": "^5.2.0",
+    "react-dom": "^18.2.0",
+    "react-firebase-hooks": "^5.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.4.2",
+    "@types/react": "^18.2.21",
+    "@types/react-dom": "^18.2.7",
+    "@vitejs/plugin-react": "^4.0.0",
+    "autoprefixer": "^10.4.13",
+    "postcss": "^8.4.21",
+    "tailwindcss": "^3.3.3",
+    "typescript": "^5.3.3",
+    "vite": "^5.1.0"
+  }
+}
