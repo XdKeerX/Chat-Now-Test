@@ -1,0 +1,34 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    
+    function isAdmin() {
+      return request.auth != null && 
+        firestore.exists(/databases/(default)/documents/admins/$(request.auth.uid));
+    }
+    
+    function isRoomMember(roomId) {
+      return request.auth != null && 
+        firestore.get(/databases/(default)/documents/rooms/$(roomId)).data.members.hasAny([request.auth.uid]);
+    }
+    
+    // Room files
+    match /rooms/{roomId}/files/{fileName} {
+      allow read: if isSignedIn() && isRoomMember(roomId);
+      allow create: if isSignedIn() && 
+        isRoomMember(roomId) && 
+        request.resource.size < 5 * 1024 * 1024 && // 5MB max
+        (
+          request.resource.contentType.matches('image/.*') ||
+          request.resource.contentType.matches('video/.*') ||
+          request.resource.contentType.matches('audio/.*') ||
+          request.resource.contentType.matches('application/pdf')
+        );
+      allow delete: if isAdmin();
+    }
+  }
+}

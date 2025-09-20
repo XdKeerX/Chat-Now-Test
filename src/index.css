@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply antialiased;
+  }
+  
+  body {
+    @apply bg-slate-50 text-slate-900;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply px-4 py-2 rounded-lg transition-colors;
+  }
+  
+  .btn-primary {
+    @apply bg-blue-600 text-white hover:bg-blue-700;
+  }
+  
+  .btn-danger {
+    @apply bg-red-600 text-white hover:bg-red-700;
+  }
+  
+  .card {
+    @apply bg-white rounded-lg shadow-lg p-4;
+  }
+  
+  .input {
+    @apply w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none;
+  }
+  
+  .textarea {
+    @apply w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none min-h-[100px];
+  }
+}
+
+/* Animations */
+.fade-in {
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Message bubbles */
+.message-bubble {
+  @apply p-3 rounded-lg max-w-[80%] break-words;
+}
+
+.message-bubble.own {
+  @apply bg-blue-100 self-end;
+}
+
+.message-bubble.other {
+  @apply bg-gray-100;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-300 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-slate-400;
+}

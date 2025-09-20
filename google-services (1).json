@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "132290046194",
+    "project_id": "jaballahchat",
+    "storage_bucket": "jaballahchat.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:132290046194:android:c9ec49c5d6a0304c4cc86b",
+        "android_client_info": {
+          "package_name": "com.Jaballah.chat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDX7cjp_meTPotj_aPjN3s0UsWyd2oIisA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
